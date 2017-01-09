@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Red Or Black</title>
+<style>
+body { margin: 0 }
+canvas { 
+ display: block;
+ image-rendering: crisp-edges;
+ border: 1px;
+}
+</style>
+</head>
+<body onload="rob()">
+ <div id="test"></div>
+
+ <!-- Sprites -->
+ <div style="display: none;">
+  <img id="redDisc" src="art/red.png">
+  <img id="blackDisc" src="art/black.png">
+  <img id="redBtn" src="art/redBtn.png">
+  <img id="blackBtn" src="art/blackBtn.png">
+  <img id="explosion" src="art/explosion.png">
+ </div>
+
+ <!-- Canvas -->
+ <center>
+  <canvas id="myCanvas" width="480" height="640">
+  </canvas>
+ </center> 
+
+ <!-- Action -->
+ <script src="engine.js"></script>
+ <script src="functions.js"></script>
+ <script src="rob.js"></script>
+</body>
+
+<script>
+/**
+ * fullscreenify()
+ * Stretch canvas to size of window.
+ *
+ * Zachary Johnson
+ * http://www.zachstronaut.com/
+ *
+ * See also: https://gist.github.com/1178522
+ */
+
+window.addEventListener(
+    'load',
+    function () {
+        var canvas = document.getElementsByTagName('canvas')[0];
+
+        fullscreenify(canvas);
+    },
+    false
+);
+
+function fullscreenify(canvas) {
+    var style = canvas.getAttribute('style') || '';
+    
+    window.addEventListener('resize', function () {resize(canvas);}, false);
+
+    resize(canvas);
+
+    function resize(canvas) {
+        var scale = getScale(canvas);
+        scale = scale + ', ' + scale;
+        
+        canvas.setAttribute('style', style + ' ' + '-ms-transform-origin: center top; -webkit-transform-origin: center top; -moz-transform-origin: center top; -o-transform-origin: center top; transform-origin: center top; -ms-transform: scale(' + scale + '); -webkit-transform: scale3d(' + scale + ', 1); -moz-transform: scale(' + scale + '); -o-transform: scale(' + scale + '); transform: scale(' + scale + ');');
+    }
+}
+
+function getScale(canvas) {
+        var scale = {};
+        scale.x = (document.body.innerWidth - 0) / canvas.width;
+        scale.y = (document.body.innerHeight - 0) / canvas.height;
+        
+        if (scale.x < scale.y) {
+            return scale.x;
+        } else {
+            return scale.y;
+        }
+}
+</script>
+</html>
